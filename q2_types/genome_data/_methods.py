@@ -16,7 +16,7 @@ import numpy as np
 import skbio
 from qiime2.util import duplicate
 
-from q2_types._util import _collate_helper
+from q2_types._util import _collate_helper, partition_dir_format
 from q2_types.feature_data import DNAIterator, DNAFASTAFormat
 from q2_types.genome_data import (
     SeedOrthologDirFmt, OrthologAnnotationDirFmt, LociDirectoryFormat,
@@ -152,3 +152,21 @@ def collate_genomes(
         )
 
     return genomes_dir
+
+
+def partition_genes(
+    genes: GenesDirectoryFormat, num_partitions: int = None
+) -> GenesDirectoryFormat:
+    return partition_dir_format(genes, num_partitions)
+
+
+def partition_proteins(
+    proteins: ProteinsDirectoryFormat, num_partitions: int = None
+) -> ProteinsDirectoryFormat:
+    return partition_dir_format(proteins, num_partitions)
+
+
+def partition_loci(
+    loci: LociDirectoryFormat, num_partitions: int = None
+) -> LociDirectoryFormat:
+    return partition_dir_format(loci, num_partitions)

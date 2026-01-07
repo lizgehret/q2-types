@@ -405,6 +405,54 @@ plugin.methods.register_function(
                 "artifact.",
 )
 
+plugin.methods.register_function(
+    function=q2_types.genome_data.partition_genes,
+    inputs={"genes": GenomeData[Genes]},
+    parameters={"num_partitions": Int % Range(1, None)},
+    outputs={"partitioned_genes": Collection[GenomeData[Genes]]},
+    input_descriptions={"genes": "The genes to partition."},
+    parameter_descriptions={
+        "num_partitions": "The number of partitions to split the genes"
+        " into. Defaults to partitioning into individual"
+        " genes."
+    },
+    name="Partition genes",
+    description="Partition a GenomeData[Genes] artifact into smaller "
+                "artifacts containing subsets of the genes",
+)
+
+plugin.methods.register_function(
+    function=q2_types.genome_data.partition_proteins,
+    inputs={"proteins": GenomeData[Proteins]},
+    parameters={"num_partitions": Int % Range(1, None)},
+    outputs={"partitioned_proteins": Collection[GenomeData[Proteins]]},
+    input_descriptions={"proteins": "The proteins to partition."},
+    parameter_descriptions={
+        "num_partitions": "The number of partitions to split the proteins"
+        " into. Defaults to partitioning into individual"
+        " proteins."
+    },
+    name="Partition proteins",
+    description="Partition a GenomeData[Proteins] artifact into smaller "
+                "artifacts containing subsets of the proteins",
+)
+
+plugin.methods.register_function(
+    function=q2_types.genome_data.partition_loci,
+    inputs={"loci": GenomeData[Loci]},
+    parameters={"num_partitions": Int % Range(1, None)},
+    outputs={"partitioned_loci": Collection[GenomeData[Loci]]},
+    input_descriptions={"loci": "The loci to partition."},
+    parameter_descriptions={
+        "num_partitions": "The number of partitions to split the loci"
+        " into. Defaults to partitioning into individual"
+        " loci."
+    },
+    name="Partition loci",
+    description="Partition a GenomeData[Loci] artifact into smaller "
+                "artifacts containing subsets of the loci",
+)
+
 importlib.import_module('q2_types.bowtie2._deferred_setup')
 importlib.import_module('q2_types.distance_matrix._deferred_setup')
 importlib.import_module('q2_types.feature_data._deferred_setup')
