@@ -31,10 +31,12 @@ from .. import (
     MixedCaseAlignedRNASequencesDirectoryFormat,
     SequenceCharacteristicsDirectoryFormat,
     SequenceCharacteristicsFormat,
+    ImportanceFormat, ImportanceDirectoryFormat,
     FeatureData, Taxonomy, Sequence, LinkedSequence, PairedEndSequence,
     AlignedSequence,
     Differential, ProteinSequence, AlignedProteinSequence, RNASequence,
-    AlignedRNASequence, PairedEndRNASequence, BLAST6, SequenceCharacteristics)
+    AlignedRNASequence, PairedEndRNASequence, BLAST6,
+    SequenceCharacteristics, Importance)
 
 from ...plugin_setup import plugin
 
@@ -60,7 +62,8 @@ plugin.register_formats(
     MixedCaseAlignedDNASequencesDirectoryFormat,
     MixedCaseAlignedRNAFASTAFormat,
     MixedCaseAlignedRNASequencesDirectoryFormat, SequenceCharacteristicsFormat,
-    SequenceCharacteristicsDirectoryFormat
+    SequenceCharacteristicsDirectoryFormat, ImportanceFormat,
+    ImportanceDirectoryFormat
 )
 
 plugin.register_semantic_types(FeatureData, Taxonomy, Sequence,
@@ -69,7 +72,7 @@ plugin.register_semantic_types(FeatureData, Taxonomy, Sequence,
                                Differential, ProteinSequence,
                                AlignedProteinSequence, RNASequence,
                                AlignedRNASequence, PairedEndRNASequence,
-                               BLAST6, SequenceCharacteristics)
+                               BLAST6, SequenceCharacteristics, Importance)
 
 plugin.register_artifact_class(
     FeatureData[Taxonomy],
@@ -164,6 +167,12 @@ plugin.register_artifact_class(
     directory_format=SequenceCharacteristicsDirectoryFormat,
     description=("Characteristics of sequences (e.g., the length of a gene "
                  "in basepairs)."))
+
+plugin.register_artifact_class(
+    FeatureData[Importance],
+    directory_format=ImportanceDirectoryFormat,
+    description=("Numeric importance scores associated with a set of feature "
+                 "identifiers."))
 
 importlib.import_module('._transformers', __name__)
 importlib.import_module('._validators', __name__)

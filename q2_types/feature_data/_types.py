@@ -45,3 +45,5 @@ BLAST6 = SemanticType('BLAST6',
 
 SequenceCharacteristics = SemanticType('SequenceCharacteristics',
                                        variant_of=FeatureData.field['type'])
+
+Importance = SemanticType('Importance', variant_of=FeatureData.field['type'])

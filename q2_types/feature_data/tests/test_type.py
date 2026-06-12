@@ -21,7 +21,8 @@ from q2_types.feature_data import (
     AlignedRNASequencesDirectoryFormat, AlignedRNASequence,
     PairedRNASequencesDirectoryFormat, PairedEndRNASequence,
     BLAST6, BLAST6DirectoryFormat, SequenceCharacteristics,
-    SequenceCharacteristicsDirectoryFormat
+    SequenceCharacteristicsDirectoryFormat, Importance,
+    ImportanceDirectoryFormat
 )
 from qiime2.plugin.testing import TestPluginBase
 
@@ -137,6 +138,13 @@ class TestTypes(TestPluginBase):
         self.assertSemanticTypeRegisteredToFormat(
             FeatureData[SequenceCharacteristics],
             SequenceCharacteristicsDirectoryFormat)
+
+    def test_importance_semantic_type_registration(self):
+        self.assertRegisteredSemanticType(Importance)
+
+    def test_importance_semantic_type_format_registration(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            FeatureData[Importance], ImportanceDirectoryFormat)
 
 
 if __name__ == "__main__":
