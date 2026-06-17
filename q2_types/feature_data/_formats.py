@@ -162,15 +162,6 @@ class FASTAFormat(model.TextFileFormat):
             self.alphabet)
         self._validate_FASTA(level, FASTAValidator, ValidationSet)
 
-    def _validate_line_lengths(
-            self, seq_len, prev_seq_len, prev_seq_start_line):
-        if prev_seq_len != seq_len:
-            raise ValidationError('The sequence starting on line '
-                                  f'{prev_seq_start_line} was length '
-                                  f'{prev_seq_len}. All previous sequences '
-                                  f'were length {seq_len}. All sequences must '
-                                  'be the same length for AlignedFASTAFormat.')
-
     def _validate_FASTA(self, level, FASTAValidator=None, ValidationSet=None):
         last_line_was_ID = False
         ids = {}
@@ -184,6 +175,7 @@ class FASTAFormat(model.TextFileFormat):
 
         with self.path.open('rb') as fh:
             try:
+                num_seqs = 0
                 first = fh.read(6)
                 if first[:3] == b'\xEF\xBB\xBF':
                     first = first[3:]
@@ -205,6 +197,7 @@ class FASTAFormat(model.TextFileFormat):
                     line = line.decode('utf-8-sig')
 
                     if line.startswith('>'):
+                        num_seqs += 1
                         if FASTAValidator and ValidationSet:
                             if seq_len == 0:
                                 seq_len = prev_seq_len
@@ -267,7 +260,7 @@ class FASTAFormat(model.TextFileFormat):
                 raise ValidationError(f'utf-8 cannot decode byte on line '
                                       f'{line_number}') from e
 
-        if self.aligned:
+        if self.aligned and num_seqs > 1:
             self._validate_line_lengths(
                 seq_len, prev_seq_len, prev_seq_start_line)
 
